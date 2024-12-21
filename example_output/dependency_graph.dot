@@ -1,0 +1,6 @@
+digraph G {
+    "pytest" -> "colorama";
+    "pytest" -> "iniconfig";
+    "pytest" -> "packaging";
+    "pytest" -> "pluggy";
+}
