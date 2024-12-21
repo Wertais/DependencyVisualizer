@@ -52,7 +52,7 @@ Dependency Visualizer — это инструмент командной стр�
 
 ### **Шаг 1: Клонирование репозитория**
 ```bash
-git clone <ваша ссылка на репозиторий>
+git clone https://github.com/Wertais/DependencyVisualizer.git
 cd DependencyVisualizer
 ```
 
@@ -147,7 +147,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'dependency-visualizer=main:main',
+            'dependency-visualizer=dependency_visualizer.main:main',
         ],
     },
 )
@@ -170,8 +170,10 @@ dependency-visualizer --package pytest --output example_output/dependency_graph.
 ```plaintext
 DependencyVisualizer/
 ├── .github/
-│   └── workflows/         # Настройки CI/CD
-├── config/                # Конфигурационные файлы
+│   └── workflows/         # Настройки CI/CD (если есть)
+├── dependency_visualizer/
+│   ├── __init__.py
+│   ├── main.py
 ├── example_output/        # Пример результатов (графы зависимостей)
 │   └── dependency_graph.png
 ├── tests/                 # Тесты
@@ -190,8 +192,6 @@ DependencyVisualizer/
 - Протестировано на Python 3.12.6.
 
 ---
-
-
 
 **Дата выполнения:** *21.12.2024*
 
