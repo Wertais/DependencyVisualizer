@@ -21,50 +21,49 @@ def get_dependencies(package_name):
             break
     return dependencies if dependencies[0] else []
 
-def build_graph(package_name, output_path):
+def build_mermaid_graph(package_name, output_path):
     """
-    Создаёт граф зависимостей в формате .dot и преобразует его в .png.
+    Создаёт граф зависимостей в формате Mermaid и сохраняет его как PNG.
     """
     dependencies = get_dependencies(package_name)
 
-    # Создаём граф в формате .dot
-    graph_lines = ["digraph G {"]
+    # Создаём граф в формате Mermaid
+    graph_lines = ["graph TD"]
     for dep in dependencies:
-        graph_lines.append(f'    "{package_name}" -> "{dep}";')
-    graph_lines.append("}")
+        graph_lines.append(f'    {package_name} --> {dep}')
 
-    # Сохраняем граф
-    dot_file = output_path.replace(".png", ".dot")
-    print(f"Путь для сохранения .dot файла: {dot_file}")
+    # Сохраняем Mermaid диаграмму
+    mmd_file = output_path.replace(".png", ".mmd")
+    print(f"Путь для сохранения .mmd файла: {mmd_file}")
     print(f"Путь для сохранения .png файла: {output_path}")
-    print("Содержимое .dot файла:")
+    print("Содержимое .mmd файла:")
     print("\n".join(graph_lines))
 
     try:
-        with open(dot_file, "w") as f:
+        with open(mmd_file, "w") as f:
             f.write("\n".join(graph_lines))
-        print(f".dot файл успешно создан: {dot_file}")
+        print(f".mmd файл успешно создан: {mmd_file}")
     except Exception as e:
-        print(f"Ошибка при создании .dot файла: {e}")
+        print(f"Ошибка при создании .mmd файла: {e}")
         return
 
-    # Конвертируем .dot в .png с помощью Graphviz
-    command = f"dot -Tpng {dot_file} -o {output_path}"
-    print(f"Выполнение команды Graphviz: {command}")
+    # Конвертируем .mmd в .png с помощью Mermaid CLI
+    command = f"mmdc -i {mmd_file} -o {output_path}"
+    print(f"Выполнение команды Mermaid CLI: {command}")
     result = os.system(command)
     if result != 0:
-        print("Ошибка при выполнении команды Graphviz.")
+        print("Ошибка при выполнении команды Mermaid CLI.")
     else:
         print(f"Граф зависимостей сохранён в {output_path}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Визуализация графа зависимостей.")
+    parser = argparse.ArgumentParser(description="Визуализация графа зависимостей с помощью Mermaid.")
     parser.add_argument("--package", required=True, help="Имя Python-пакета.")
     parser.add_argument("--output", required=True, help="Путь к выходному .png файлу.")
     args = parser.parse_args()
 
     try:
-        build_graph(args.package, args.output)
+        build_mermaid_graph(args.package, args.output)
     except ValueError as e:
         print(e)
 

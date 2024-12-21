@@ -7,7 +7,7 @@ Dependency Visualizer — это инструмент командной стр�
 
 ## **Функциональность**
 1. Построение графа зависимостей пакета, включая транзитивные зависимости.
-2. Сохранение графа в формате `.dot` и его визуализация в формате `.png` с использованием Graphviz.
+2. Сохранение графа в формате `.mmd` и его визуализация в формате `.png` с использованием Mermaid CLI.
 
 ---
 
@@ -27,7 +27,7 @@ Dependency Visualizer — это инструмент командной стр�
      ```
 
 2. `build_graph(package_name, output_path)`
-   - **Описание:** Создаёт граф зависимостей в формате `.dot` и преобразует его в изображение `.png`.
+   - **Описание:** Создаёт граф зависимостей в формате `.mmd` и преобразует его в изображение `.png`.
    - **Параметры:**
      - `package_name` (str): Имя пакета Python.
      - `output_path` (str): Путь для сохранения `.png` файла.
@@ -43,7 +43,7 @@ Dependency Visualizer — это инструмент командной стр�
      - `--output` (str): Путь к файлу изображения (.png).
    - **Пример запуска:**
      ```bash
-     python main.py --package pytest --output example_output/dependency_graph.png
+     python -m dependency_visualizer.main --package pytest --output example_output/dependency_graph.png
      ```
 
 ---
@@ -67,37 +67,43 @@ venv\Scripts\activate  # Для Windows
 pip install -r requirements.txt
 ```
 
+### **Шаг 4: Установка Mermaid CLI**
+Убедитесь, что Node.js установлен, затем выполните:
+```bash
+npm install -g @mermaid-js/mermaid-cli
+```
+
 ---
 
 ## **Использование**
 
 ### **Команда для запуска**
 ```bash
-python main.py --package <имя_пакета> --output <путь_к_файлу>
+python -m dependency_visualizer.main --package <имя_пакета> --output <путь_к_файлу>
 ```
 
 ### **Пример команды**
 ```bash
-python main.py --package pytest --output example_output/dependency_graph.png
+python -m dependency_visualizer.main --package pytest --output example_output/dependency_graph.png
 ```
 
 ### **Пример результата**
 После выполнения команды:
 - В папке `example_output` создаётся файл `dependency_graph.png`.
+- Также создаётся промежуточный `.mmd` файл для Mermaid CLI.
 - В консоли выводится следующий результат:
 
 ```plaintext
-Путь для сохранения .dot файла: example_output/dependency_graph.dot
+Путь для сохранения .mmd файла: example_output/dependency_graph.mmd
 Путь для сохранения .png файла: example_output/dependency_graph.png
-Содержимое .dot файла:
-digraph G {
-    "pytest" -> "colorama";
-    "pytest" -> "iniconfig";
-    "pytest" -> "packaging";
-    "pytest" -> "pluggy";
-}
-.dot файл успешно создан: example_output/dependency_graph.dot
-Выполнение команды Graphviz: dot -Tpng example_output/dependency_graph.dot -o example_output/dependency_graph.png
+Содержимое .mmd файла:
+graph TD
+    pytest --> colorama
+    pytest --> iniconfig
+    pytest --> packaging
+    pytest --> pluggy
+.mmd файл успешно создан: example_output/dependency_graph.mmd
+Выполнение команды Mermaid CLI: mmdc -i example_output/dependency_graph.mmd -o example_output/dependency_graph.png
 Граф зависимостей сохранён в example_output/dependency_graph.png
 ```
 
@@ -123,7 +129,7 @@ pytest
 platform win32 -- Python 3.12.6, pytest-8.3.4, pluggy-1.5.0
 collected 1 item                                                                                                      
 
-test.py .                                                                                                       [100%]
+test.py .                                                                                                      [100%]
 
 ================================================== 1 passed in 0.01s ==================================================
 ```
@@ -170,11 +176,12 @@ dependency-visualizer --package pytest --output example_output/dependency_graph.
 ```plaintext
 DependencyVisualizer/
 ├── .github/
-│   └── workflows/         # Настройки CI/CD (если есть)
+│   └── workflows/         # Настройки CI/CD
 ├── dependency_visualizer/
 │   ├── __init__.py
 │   ├── main.py
 ├── example_output/        # Пример результатов (графы зависимостей)
+│   ├── dependency_graph.mmd
 │   └── dependency_graph.png
 ├── tests/                 # Тесты
 ├── venv/                  # Виртуальное окружение
@@ -188,7 +195,7 @@ DependencyVisualizer/
 ---
 
 ## **Дополнительная информация**
-- Для визуализации графов используется Graphviz. Убедитесь, что Graphviz установлен и доступен в системной переменной `PATH`.
+- Для визуализации графов используется Mermaid CLI. Убедитесь, что Mermaid CLI установлен и доступен в PATH.
 - Протестировано на Python 3.12.6.
 
 ---
