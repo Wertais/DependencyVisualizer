@@ -15,7 +15,7 @@ Dependency Visualizer — это инструмент командной стр�
 
 ### **Шаг 1: Клонирование репозитория**
 ```bash
-git clone <ваша ссылка на репозиторий>
+git clone https://github.com/Wertais/DependencyVisualizer.git   
 cd DependencyVisualizer
 ```
 
