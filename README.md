@@ -97,7 +97,7 @@ test.py .                                                                       
 ```plaintext
 DependencyVisualizer/
 ├── .github/
-│   └── workflows/         # Настройки CI/CD (если есть)
+│   └── workflows/         # Настройки CI/CD 
 ├── config/                # Конфигурационные файлы
 ├── example_output/        # Пример результатов (графы зависимостей)
 │   └── dependency_graph.png
